@@ -1,3 +1,5 @@
+// This file is only for bot testing purposes. Delete it when you're done testing.
+
 const { SlashCommandBuilder } = require("discord.js");
 const { execute } = require("./user");
 

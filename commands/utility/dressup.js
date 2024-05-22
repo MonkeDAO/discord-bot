@@ -5,6 +5,7 @@ const {
   ButtonBuilder,
   ButtonStyle,
   ActionRowBuilder,
+  ComponentAssertions,
 } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
@@ -66,7 +67,73 @@ module.exports = {
     const generation = interaction.options.getNumber("generation");
     const number = interaction.options.getNumber("monke");
 
-    const background = new ButtonBuilder().setLabel("Background");
+    const file = new AttachmentBuilder(
+      "https://utfs.io/f/1571c870-c11d-42d4-a767-bd7599ed8d8e-o6rynl.png"
+    );
+
+    const embed = new EmbedBuilder()
+      .setTitle(`Dress Up Your Monke!`)
+      .setColor("#0099ff")
+      .setDescription(
+        `Hello Gen${generation} Monke #${number}! Choose how you want to dress up your Monke`
+      )
+      .setThumbnail(
+        "https://utfs.io/f/fe2b27a4-d815-4801-bd46-748166eecb3b-18ddfq.png"
+      )
+      .setImage(
+        "https://utfs.io/f/83aad697-0aa7-456f-8bc2-4e35aa06ab02-2fyg.png"
+      ) // Need to include the particular user's monke pic.
+      .addFields(
+        { name: "Type", value: "xyz", inline: true },
+        { name: "Clothes", value: "xyz", inline: true },
+        { name: "Ears", value: "xyz", inline: true },
+        { name: "Mouth", value: "xyz", inline: true },
+        { name: "Eyes", value: "xyz", inline: true },
+        { name: "Hat", value: "xyz", inline: true }
+      )
+      .setTimestamp();
+
+    const background = new ButtonBuilder()
+      .setCustomId("background")
+      .setLabel("Background")
+      .setStyle(ButtonStyle.Success);
+    const outfit = new ButtonBuilder()
+      .setCustomId("outfit")
+      .setLabel("Outfit")
+      .setStyle(ButtonStyle.Success);
+    const sombrero = new ButtonBuilder()
+      .setCustomId("sombrero")
+      .setLabel("Sombrero")
+      .setStyle(ButtonStyle.Success);
+    const gif = new ButtonBuilder()
+      .setCustomId("gif")
+      .setLabel("GIFs")
+      .setStyle(ButtonStyle.Success);
+    const wallpaper = new ButtonBuilder()
+      .setCustomId("wallpaper")
+      .setLabel("Save as Wallpaper")
+      .setStyle(ButtonStyle.Success);
+    const banner = new ButtonBuilder()
+      .setCustomId("banner")
+      .setLabel("Save as Banner")
+      .setStyle(ButtonStyle.Success);
+    const watchface = new ButtonBuilder()
+      .setCustomId("Save as Watchface")
+      .setLabel("Background")
+      .setStyle(ButtonStyle.Success);
+    const save = new ButtonBuilder()
+      .setCustomId("save")
+      .setLabel("Save as Is")
+      .setStyle(ButtonStyle.Success);
+
+    const row1 = new ActionRowBuilder().addComponents(
+      background,
+      outfit,
+      sombrero,
+      gif,
+      wallpaper
+    );
+    const row2 = new ActionRowBuilder().addComponents(banner, watchface, save);
 
     if (generation === 2 && number > 5000) {
       return interaction.reply("You can't have a Monke that big!");
@@ -78,34 +145,11 @@ module.exports = {
       const imageUri = findImageByName(inputName);
 
       console.log(imageUri);
-      const file = new AttachmentBuilder(
-        "https://utfs.io/f/1571c870-c11d-42d4-a767-bd7599ed8d8e-o6rynl.png"
-      );
-
-      const embed = new EmbedBuilder()
-        .setTitle(`Your Monke`)
-        .setColor("#0099ff")
-        .setDescription(`Gen2 Monke #${number}`)
-        .setThumbnail(
-          "https://utfs.io/f/fe2b27a4-d815-4801-bd46-748166eecb3b-18ddfq.png"
-        )
-        .setImage(
-          "https://utfs.io/f/83aad697-0aa7-456f-8bc2-4e35aa06ab02-2fyg.png"
-        ) // Need to include the particular user's monke pic.
-        .addFields(
-          { name: "Type", value: "xyz", inline: true },
-          { name: "Clothes", value: "xyz", inline: true },
-          { name: "Ears", value: "xyz", inline: true },
-          { name: "Mouth", value: "xyz", inline: true },
-          { name: "Eyes", value: "xyz", inline: true },
-          { name: "Hat", value: "xyz", inline: true }
-        )
-        .setTimestamp();
-      await interaction.reply({
-        content: `Hello Gen${generation} #${number} Monke! Welcome to Monke Dress Up! Choose how you want to dress up your Monke`,
-        embeds: [embed],
-        files: [file],
-      });
     }
+    await interaction.reply({
+      embeds: [embed],
+      //   files: [file],
+      components: [row1, row2],
+    });
   },
 };

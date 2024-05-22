@@ -9,6 +9,9 @@ const {
 } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
+const {
+  handleButtonInteraction,
+} = require("../../utils/handleButtonInteraction");
 
 const monkeDataPath = path.join(
   __dirname,
@@ -151,5 +154,36 @@ module.exports = {
       //   files: [file],
       components: [row1, row2],
     });
+
+    // let newRow;
+
+    // if (interaction.customId === "background") {
+    //   newRow = new ActionRowBuilder().addComponents(
+    //     new ButtonBuilder()
+    //       .setCustomId("holiday")
+    //       .setLabel("Holiday")
+    //       .setStyle(ButtonStyle.Primary),
+    //     new ButtonBuilder()
+    //       .setCustomId("nobg")
+    //       .setLabel("No Background")
+    //       .setStyle(ButtonStyle.Primary)
+    //   );
+    // } else if (interaction.customId === "outfit") {
+    //   newRow = new ActionRowBuilder().addComponents(
+    //     new ButtonBuilder()
+    //       .setCustomId("outfit")
+    //       .setLabel("Outfit")
+    //       .setStyle(ButtonStyle.Primary),
+    //     new ButtonBuilder()
+    //       .setCustomId("nobg")
+    //       .setLabel("No Background")
+    //       .setStyle(ButtonStyle.Primary)
+    //   );
+    // }
+
+    // await interaction.followUp({
+    //   content: "Customize your selection!",
+    //   components: [newRow],
+    // });
   },
 };

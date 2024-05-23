@@ -27,17 +27,20 @@ try {
   process.exit(1);
 }
 
-function findImageByName(monkename) {
-  if (jsonData.mint) {
-    console.log("Mint object found!", jsonData.mint);
-    if (jsonData.mint.name === monkename) {
-      return jsonData.mint.imageUri;
-    } else {
-      console.log(`Name "${monkename}" does not match "${jsonData.mint.name}"`);
-      return null;
-    }
+function findImageUrisByName(data, name) {
+  return data
+    .filter((entry) => entry.mint.name === name)
+    .map((entry) => entry.mint.imageUri);
+}
+
+function findTraitByName(data, name, traitt) {
+  const entry = data.find((entry) => entry.mint.name === name);
+  if (entry) {
+    const trait = entry.mint.attributes.find(
+      (attr) => attr.trait_type === traitt
+    );
+    return trait ? trait.value : null;
   } else {
-    console.log("Mint object not found in JSON data");
     return null;
   }
 }
@@ -66,10 +69,33 @@ module.exports = {
   async execute(interaction) {
     const generation = interaction.options.getNumber("generation");
     const number = interaction.options.getNumber("monke");
-
     const file = new AttachmentBuilder(
       "https://utfs.io/f/1571c870-c11d-42d4-a767-bd7599ed8d8e-o6rynl.png"
     );
+
+    let imageUri, type, clothes, ears, mouth, eyes, hat;
+
+    if (generation === 2) {
+      const inputName = `SMB #${number}`;
+      imageUri = findImageUrisByName(jsonData, inputName).toString();
+      type = findTraitByName(jsonData, inputName, "Type");
+      clothes = findTraitByName(jsonData, inputName, "Clothes");
+      ears = findTraitByName(jsonData, inputName, "Ears");
+      mouth = findTraitByName(jsonData, inputName, "Mouth");
+      eyes = findTraitByName(jsonData, inputName, "Eyes");
+      hat = findTraitByName(jsonData, inputName, "Hat");
+    }
+
+    if (generation === 3) {
+      const inputName = `SMB #${number}`;
+      imageUri = findImageUrisByName(jsonData, inputName).toString();
+      type = findTraitByName(jsonData, inputName, "Type");
+      clothes = findTraitByName(jsonData, inputName, "Clothes");
+      ears = findTraitByName(jsonData, inputName, "Ears");
+      mouth = findTraitByName(jsonData, inputName, "Mouth");
+      eyes = findTraitByName(jsonData, inputName, "Eyes");
+      hat = findTraitByName(jsonData, inputName, "Hat");
+    }
 
     const embed = new EmbedBuilder()
       .setTitle(`Dress Up Your Monke!`)
@@ -80,16 +106,14 @@ module.exports = {
       .setThumbnail(
         "https://utfs.io/f/fe2b27a4-d815-4801-bd46-748166eecb3b-18ddfq.png"
       )
-      .setImage(
-        "https://utfs.io/f/83aad697-0aa7-456f-8bc2-4e35aa06ab02-2fyg.png"
-      ) // Need to include the particular user's monke pic.
+      .setImage(imageUri)
       .addFields(
-        { name: "Type", value: "xyz", inline: true },
-        { name: "Clothes", value: "xyz", inline: true },
-        { name: "Ears", value: "xyz", inline: true },
-        { name: "Mouth", value: "xyz", inline: true },
-        { name: "Eyes", value: "xyz", inline: true },
-        { name: "Hat", value: "xyz", inline: true }
+        { name: "Type", value: type, inline: true },
+        { name: "Clothes", value: clothes, inline: true },
+        { name: "Ears", value: ears, inline: true },
+        { name: "Mouth", value: mouth, inline: true },
+        { name: "Eyes", value: eyes, inline: true },
+        { name: "Hat", value: hat, inline: true }
       )
       .setTimestamp();
 
@@ -139,21 +163,13 @@ module.exports = {
       return interaction.reply("You can't have a Monke that big!");
     }
 
-    if (generation === 2) {
-      const inputName = `SMB #${number}`;
-      console.log(inputName);
-      const imageUri = findImageByName(inputName);
-
-      console.log(imageUri);
-    }
     const response = await interaction.reply({
       embeds: [embed],
       components: [row1, row2],
     });
+
     await wait(2_000);
-
     let newRow;
-
     const collectorFilter = (i) => i.user.id === interaction.user.id;
 
     try {
@@ -173,7 +189,6 @@ module.exports = {
           .setStyle(ButtonStyle.Primary);
         newRow = new ActionRowBuilder().addComponents(holiday, nobg);
         await confirmation.update({
-          content: `Customizing your selection!`,
           components: [newRow],
         });
       } else if (confirmation.customId === "outfit") {
@@ -187,7 +202,6 @@ module.exports = {
           .setStyle(ButtonStyle.Primary);
         newRow = new ActionRowBuilder().addComponents(kit, nobg);
         await confirmation.update({
-          content: `Customizing your selection!`,
           components: [newRow],
         });
       } else if (confirmation.customId === "sombrero") {
@@ -201,7 +215,6 @@ module.exports = {
           .setStyle(ButtonStyle.Primary);
         newRow = new ActionRowBuilder().addComponents(outfit, nobg);
         await confirmation.update({
-          content: `Customizing your selection!`,
           components: [newRow],
         });
       } else if (confirmation.customId === "gif") {
@@ -215,7 +228,6 @@ module.exports = {
           .setStyle(ButtonStyle.Primary);
         newRow = new ActionRowBuilder().addComponents(outfit, nobg);
         await confirmation.update({
-          content: `Customizing your selection!`,
           components: [newRow],
         });
       } else if (confirmation.customId === "wallpaper") {
@@ -229,7 +241,6 @@ module.exports = {
           .setStyle(ButtonStyle.Primary);
         newRow = new ActionRowBuilder().addComponents(outfit, nobg);
         await confirmation.update({
-          content: `Customizing your selection!`,
           components: [newRow],
         });
       } else if (confirmation.customId === "banner") {
@@ -243,7 +254,6 @@ module.exports = {
           .setStyle(ButtonStyle.Primary);
         newRow = new ActionRowBuilder().addComponents(outfit, nobg);
         await confirmation.update({
-          content: `Customizing your selection!`,
           components: [newRow],
         });
       } else if (confirmation.customId === "watchface") {
@@ -257,7 +267,6 @@ module.exports = {
           .setStyle(ButtonStyle.Primary);
         newRow = new ActionRowBuilder().addComponents(outfit, nobg);
         await confirmation.update({
-          content: `Customizing your selection!`,
           components: [newRow],
         });
       } else if (confirmation.customId === "save") {
@@ -271,7 +280,6 @@ module.exports = {
           .setStyle(ButtonStyle.Primary);
         newRow = new ActionRowBuilder().addComponents(outfit, nobg);
         await confirmation.update({
-          content: `Customizing your selection!`,
           components: [newRow],
         });
       }

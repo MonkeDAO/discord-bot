@@ -9,10 +9,7 @@ const {
 } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
-const {
-  handleButtonInteraction,
-} = require("../../utils/handleButtonInteraction");
-
+const wait = require("node:timers/promises").setTimeout;
 const monkeDataPath = path.join(
   __dirname,
   "..",
@@ -114,15 +111,15 @@ module.exports = {
       .setStyle(ButtonStyle.Success);
     const wallpaper = new ButtonBuilder()
       .setCustomId("wallpaper")
-      .setLabel("Save as Wallpaper")
+      .setLabel("Wallpaper")
       .setStyle(ButtonStyle.Success);
     const banner = new ButtonBuilder()
       .setCustomId("banner")
-      .setLabel("Save as Banner")
+      .setLabel("Banner")
       .setStyle(ButtonStyle.Success);
     const watchface = new ButtonBuilder()
-      .setCustomId("Save as Watchface")
-      .setLabel("Background")
+      .setCustomId("watchface")
+      .setLabel("Watchface")
       .setStyle(ButtonStyle.Success);
     const save = new ButtonBuilder()
       .setCustomId("save")
@@ -149,41 +146,141 @@ module.exports = {
 
       console.log(imageUri);
     }
-    await interaction.reply({
+    const response = await interaction.reply({
       embeds: [embed],
-      //   files: [file],
       components: [row1, row2],
     });
+    await wait(2_000);
 
-    // let newRow;
+    let newRow;
 
-    // if (interaction.customId === "background") {
-    //   newRow = new ActionRowBuilder().addComponents(
-    //     new ButtonBuilder()
-    //       .setCustomId("holiday")
-    //       .setLabel("Holiday")
-    //       .setStyle(ButtonStyle.Primary),
-    //     new ButtonBuilder()
-    //       .setCustomId("nobg")
-    //       .setLabel("No Background")
-    //       .setStyle(ButtonStyle.Primary)
-    //   );
-    // } else if (interaction.customId === "outfit") {
-    //   newRow = new ActionRowBuilder().addComponents(
-    //     new ButtonBuilder()
-    //       .setCustomId("outfit")
-    //       .setLabel("Outfit")
-    //       .setStyle(ButtonStyle.Primary),
-    //     new ButtonBuilder()
-    //       .setCustomId("nobg")
-    //       .setLabel("No Background")
-    //       .setStyle(ButtonStyle.Primary)
-    //   );
-    // }
+    const collectorFilter = (i) => i.user.id === interaction.user.id;
 
-    // await interaction.followUp({
-    //   content: "Customize your selection!",
-    //   components: [newRow],
-    // });
+    try {
+      const confirmation = await response.awaitMessageComponent({
+        filter: collectorFilter,
+        // time: 60_000,
+      });
+
+      if (confirmation.customId === "background") {
+        const holiday = new ButtonBuilder()
+          .setCustomId("holiday")
+          .setLabel("Holiday")
+          .setStyle(ButtonStyle.Primary);
+        const nobg = new ButtonBuilder()
+          .setCustomId("nobg")
+          .setLabel("No Background")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(holiday, nobg);
+        await confirmation.update({
+          content: `Customizing your selection!`,
+          components: [newRow],
+        });
+      } else if (confirmation.customId === "outfit") {
+        const kit = new ButtonBuilder()
+          .setCustomId("kit")
+          .setLabel("Outfit")
+          .setStyle(ButtonStyle.Primary);
+        const nobg = new ButtonBuilder()
+          .setCustomId("nobg")
+          .setLabel("No Background")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(kit, nobg);
+        await confirmation.update({
+          content: `Customizing your selection!`,
+          components: [newRow],
+        });
+      } else if (confirmation.customId === "sombrero") {
+        const outfit = new ButtonBuilder()
+          .setCustomId("outfit")
+          .setLabel("Outfit")
+          .setStyle(ButtonStyle.Primary);
+        const nobg = new ButtonBuilder()
+          .setCustomId("nobg")
+          .setLabel("No Background")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(outfit, nobg);
+        await confirmation.update({
+          content: `Customizing your selection!`,
+          components: [newRow],
+        });
+      } else if (confirmation.customId === "gif") {
+        const outfit = new ButtonBuilder()
+          .setCustomId("outfit")
+          .setLabel("Outfit")
+          .setStyle(ButtonStyle.Primary);
+        const nobg = new ButtonBuilder()
+          .setCustomId("nobg")
+          .setLabel("No Background")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(outfit, nobg);
+        await confirmation.update({
+          content: `Customizing your selection!`,
+          components: [newRow],
+        });
+      } else if (confirmation.customId === "wallpaper") {
+        const outfit = new ButtonBuilder()
+          .setCustomId("outfit")
+          .setLabel("Outfit")
+          .setStyle(ButtonStyle.Primary);
+        const nobg = new ButtonBuilder()
+          .setCustomId("nobg")
+          .setLabel("No Background")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(outfit, nobg);
+        await confirmation.update({
+          content: `Customizing your selection!`,
+          components: [newRow],
+        });
+      } else if (confirmation.customId === "banner") {
+        const outfit = new ButtonBuilder()
+          .setCustomId("outfit")
+          .setLabel("Outfit")
+          .setStyle(ButtonStyle.Primary);
+        const nobg = new ButtonBuilder()
+          .setCustomId("nobg")
+          .setLabel("No Background")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(outfit, nobg);
+        await confirmation.update({
+          content: `Customizing your selection!`,
+          components: [newRow],
+        });
+      } else if (confirmation.customId === "watchface") {
+        const outfit = new ButtonBuilder()
+          .setCustomId("outfit")
+          .setLabel("Outfit")
+          .setStyle(ButtonStyle.Primary);
+        const nobg = new ButtonBuilder()
+          .setCustomId("nobg")
+          .setLabel("No Background")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(outfit, nobg);
+        await confirmation.update({
+          content: `Customizing your selection!`,
+          components: [newRow],
+        });
+      } else if (confirmation.customId === "save") {
+        const outfit = new ButtonBuilder()
+          .setCustomId("outfit")
+          .setLabel("Outfit")
+          .setStyle(ButtonStyle.Primary);
+        const nobg = new ButtonBuilder()
+          .setCustomId("nobg")
+          .setLabel("No Background")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(outfit, nobg);
+        await confirmation.update({
+          content: `Customizing your selection!`,
+          components: [newRow],
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      await interaction.editReply({
+        content: "Confirmation not received within 1 minute, cancelling",
+        components: [],
+      });
+    }
   },
 };

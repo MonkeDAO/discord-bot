@@ -18,10 +18,14 @@ const monkeDataPath = path.join(
   "monkeList.json"
 );
 
+const gen3DataPath = path.join(__dirname, "..", "..", "data", "gen3List.json");
+
 let jsonData;
 try {
   jsonData = JSON.parse(fs.readFileSync(monkeDataPath, "utf-8"));
-  console.log("JSON data loaded successfully");
+  console.log(" Gen 2 JSON data loaded successfully");
+  gen3JsonData = JSON.parse(fs.readFileSync(gen3DataPath, "utf-8"));
+  console.log(" Gen 2 JSON data loaded successfully");
 } catch (error) {
   console.error("Error reading monke data:", error);
   process.exit(1);
@@ -34,6 +38,33 @@ function findImageUrisByName(data, name) {
 }
 
 function findTraitByName(data, name, traitt) {
+  const entry = data.find((entry) => entry.mint.name === name);
+  if (entry) {
+    const trait = entry.mint.attributes.find(
+      (attr) => attr.trait_type === traitt
+    );
+    return trait ? trait.value : null;
+  } else {
+    return null;
+  }
+}
+
+function findGen3ImageUrisByName(data, name) {
+  if (data && data.items) {
+    const item = data.items.find((item) => item.content.metadata.name === name);
+    if (item) {
+      console.log("Found item");
+      return item.content.metadata.links.image;
+    } else {
+      console.log(`No item found with name ${name}`);
+    }
+  } else {
+    console.log(`Invalid JSON data.`);
+  }
+  return null;
+}
+
+function findGen3TraitByName(data, name, traitt) {
   const entry = data.find((entry) => entry.mint.name === name);
   if (entry) {
     const trait = entry.mint.attributes.find(
@@ -87,8 +118,8 @@ module.exports = {
     }
 
     if (generation === 3) {
-      const inputName = `SMB #${number}`;
-      imageUri = findImageUrisByName(jsonData, inputName).toString();
+      const inputName = `SMB Gen3 #${number}`;
+      imageUri = findGen3ImageUrisByName(gen3JsonData, inputName);
       type = findTraitByName(jsonData, inputName, "Type");
       clothes = findTraitByName(jsonData, inputName, "Clothes");
       ears = findTraitByName(jsonData, inputName, "Ears");

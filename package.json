@@ -1,8 +1,5 @@
 {
   "dependencies": {
-    "@metaplex-foundation/digital-asset-standard-api": "^1.0.3",
-    "@metaplex-foundation/umi": "^0.9.1",
-    "@metaplex-foundation/umi-bundle-defaults": "^0.9.1",
     "axios": "^1.7.1",
     "discord.js": "^14.15.2",
     "dotenv": "^16.4.5"

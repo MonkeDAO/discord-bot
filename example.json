@@ -1,0 +1,6 @@
+{
+  "token": "your discord token here",
+  "clientId": "your discord client id here",
+  "guildId": "your discord guild id here",
+  "heliusTk": "your helius api key here"
+}

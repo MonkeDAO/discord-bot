@@ -1,3 +1,5 @@
+// Can use either this or fetchalt.js
+
 const { heliusTk } = require("../config.json");
 const url = `https://mainnet.helius-rpc.com/?api-key=${heliusTk}`;
 const fs = require("fs");
@@ -17,7 +19,7 @@ const getAssetsByGroup = async () => {
         groupKey: "collection",
         groupValue: "8Rt3Ayqth4DAiPnW9MDFi63TiQJHmohfTWLMQFHi4KZH",
         // page: 1,
-        // limit: 1000,
+        // limit: 10000,
       },
     }),
   });
@@ -25,11 +27,13 @@ const getAssetsByGroup = async () => {
 
   fs.writeFileSync(
     "../data/gen3List.json",
-    JSON.stringify(result, null, 2),
+    JSON.stringify(result.items, null, 2),
     "utf-8"
   );
+
+  console.log("Uploaded Gen3 Assets");
 };
 
 setInterval(() => {
   getAssetsByGroup();
-}, 1 * 1000); // This is currently set to run every second for testing, need to set it to required time limit for production
+}, 60 * 60 * 1000); // This is currently set to run every second for testing, need to set it to required time limit for production

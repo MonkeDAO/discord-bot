@@ -20,12 +20,12 @@ const monkeDataPath = path.join(
 
 const gen3DataPath = path.join(__dirname, "..", "..", "data", "gen3List.json");
 
-let jsonData;
+let jsonData, gen3JsonData;
 try {
   jsonData = JSON.parse(fs.readFileSync(monkeDataPath, "utf-8"));
   console.log(" Gen 2 JSON data loaded successfully");
   gen3JsonData = JSON.parse(fs.readFileSync(gen3DataPath, "utf-8"));
-  console.log(" Gen 2 JSON data loaded successfully");
+  console.log(" Gen 3 JSON data loaded successfully");
 } catch (error) {
   console.error("Error reading monke data:", error);
   process.exit(1);
@@ -35,6 +35,12 @@ function findImageUrisByName(data, name) {
   return data
     .filter((entry) => entry.mint.name === name)
     .map((entry) => entry.mint.imageUri);
+}
+
+function findGen3ImageUrisByName(data, name) {
+  return data
+    .filter((entry) => entry.content.metadata.name === name)
+    .map((entry) => entry.content.links.image);
 }
 
 function findTraitByName(data, name, traitt) {
@@ -49,25 +55,10 @@ function findTraitByName(data, name, traitt) {
   }
 }
 
-function findGen3ImageUrisByName(data, name) {
-  if (data && data.items) {
-    const item = data.items.find((item) => item.content.metadata.name === name);
-    if (item) {
-      console.log("Found item");
-      return item.content.metadata.links.image;
-    } else {
-      console.log(`No item found with name ${name}`);
-    }
-  } else {
-    console.log(`Invalid JSON data.`);
-  }
-  return null;
-}
-
 function findGen3TraitByName(data, name, traitt) {
-  const entry = data.find((entry) => entry.mint.name === name);
+  const entry = data.find((entry) => entry.content.metadata.name === name);
   if (entry) {
-    const trait = entry.mint.attributes.find(
+    const trait = entry.content.metadata.attributes.find(
       (attr) => attr.trait_type === traitt
     );
     return trait ? trait.value : null;
@@ -104,7 +95,7 @@ module.exports = {
       "https://utfs.io/f/1571c870-c11d-42d4-a767-bd7599ed8d8e-o6rynl.png"
     );
 
-    let imageUri, type, clothes, ears, mouth, eyes, hat;
+    let imageUri, type, clothes, ears, mouth, eyes, hat, fields, embed;
 
     if (generation === 2) {
       const inputName = `SMB #${number}`;
@@ -115,38 +106,66 @@ module.exports = {
       mouth = findTraitByName(jsonData, inputName, "Mouth");
       eyes = findTraitByName(jsonData, inputName, "Eyes");
       hat = findTraitByName(jsonData, inputName, "Hat");
+      console.log(imageUri);
+
+      embed = new EmbedBuilder()
+        .setTitle(`Dress Up Your Monke!`)
+        .setColor("#0099ff")
+        .setDescription(
+          `Hello Gen${generation} Monke #${number}! Choose how you want to dress up your Monke`
+        )
+        .setThumbnail(
+          "https://utfs.io/f/fe2b27a4-d815-4801-bd46-748166eecb3b-18ddfq.png"
+        )
+        .setImage(imageUri)
+        .addFields(
+          { name: "Type", value: type, inline: true },
+          { name: "Clothes", value: clothes, inline: true },
+          { name: "Ears", value: ears, inline: true },
+          { name: "Mouth", value: mouth, inline: true },
+          { name: "Eyes", value: eyes, inline: true },
+          { name: "Hat", value: hat, inline: true }
+        )
+        .setTimestamp();
     }
+
+    let species, eyewear, backgroundd;
 
     if (generation === 3) {
       const inputName = `SMB Gen3 #${number}`;
-      imageUri = findGen3ImageUrisByName(gen3JsonData, inputName);
-      type = findTraitByName(jsonData, inputName, "Type");
-      clothes = findTraitByName(jsonData, inputName, "Clothes");
-      ears = findTraitByName(jsonData, inputName, "Ears");
-      mouth = findTraitByName(jsonData, inputName, "Mouth");
-      eyes = findTraitByName(jsonData, inputName, "Eyes");
-      hat = findTraitByName(jsonData, inputName, "Hat");
-    }
+      imageUri = findGen3ImageUrisByName(gen3JsonData, inputName).toString();
+      species = findGen3TraitByName(gen3JsonData, inputName, "Species");
+      hat = findGen3TraitByName(gen3JsonData, inputName, "Hat");
+      eyewear = findGen3TraitByName(gen3JsonData, inputName, "Eyewear");
+      clothes = findGen3TraitByName(gen3JsonData, inputName, "Clothes");
+      mouth = findGen3TraitByName(gen3JsonData, inputName, "Mouth");
+      backgroundd = findGen3TraitByName(gen3JsonData, inputName, "Background");
+      eyes = findGen3TraitByName(gen3JsonData, inputName, "Eyes");
+      back = findGen3TraitByName(gen3JsonData, inputName, "Back");
+      console.log(imageUri);
 
-    const embed = new EmbedBuilder()
-      .setTitle(`Dress Up Your Monke!`)
-      .setColor("#0099ff")
-      .setDescription(
-        `Hello Gen${generation} Monke #${number}! Choose how you want to dress up your Monke`
-      )
-      .setThumbnail(
-        "https://utfs.io/f/fe2b27a4-d815-4801-bd46-748166eecb3b-18ddfq.png"
-      )
-      .setImage(imageUri)
-      .addFields(
-        { name: "Type", value: type, inline: true },
-        { name: "Clothes", value: clothes, inline: true },
-        { name: "Ears", value: ears, inline: true },
-        { name: "Mouth", value: mouth, inline: true },
-        { name: "Eyes", value: eyes, inline: true },
-        { name: "Hat", value: hat, inline: true }
-      )
-      .setTimestamp();
+      embed = new EmbedBuilder()
+        .setTitle(`Dress Up Your Monke!`)
+        .setColor("#0099ff")
+        .setDescription(
+          `Hello Gen${generation} Monke #${number}! Choose how you want to dress up your Monke`
+        )
+        .setThumbnail(
+          "https://utfs.io/f/fe2b27a4-d815-4801-bd46-748166eecb3b-18ddfq.png"
+        )
+        .setImage(imageUri)
+        .addFields(
+          { name: "Species", value: species, inline: true },
+          { name: "Hat", value: hat, inline: true },
+          { name: "Eyewear", value: eyewear, inline: true },
+          { name: "Clothes", value: clothes, inline: true },
+          { name: "Mouth", value: mouth, inline: true },
+          { name: "Eyes", value: eyes, inline: true },
+          { name: "Background", value: backgroundd, inline: true },
+          { name: "Back", value: back, inline: true }
+        )
+        .setTimestamp();
+    }
 
     const background = new ButtonBuilder()
       .setCustomId("background")

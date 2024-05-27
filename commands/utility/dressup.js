@@ -148,7 +148,7 @@ module.exports = {
         .setTitle(`Dress Up Your Monke!`)
         .setColor("#0099ff")
         .setDescription(
-          `Hello Gen${generation} Monke #${number}! Choose how you want to dress up your Monke`
+          `Hello ${interaction.user.username}! Choose how you want to dress up your Gen${generation} Monke #${number}`
         )
         .setThumbnail(
           "https://utfs.io/f/fe2b27a4-d815-4801-bd46-748166eecb3b-18ddfq.png"
@@ -164,6 +164,9 @@ module.exports = {
           { name: "Background", value: backgroundd, inline: true },
           { name: "Back", value: back, inline: true }
         )
+        .setFooter({
+          text: "If the interaction fails, press the desired button again",
+        })
         .setTimestamp();
     }
 
@@ -214,12 +217,14 @@ module.exports = {
     }
 
     const response = await interaction.reply({
+      // Main interaction
       embeds: [embed],
       components: [row1, row2],
+      ephemeral: true,
     });
 
     await wait(2_000);
-    let newRow;
+    let newRow, newRow2, newRow3, newRow4, newRow5, newRow6, newRow7;
     const collectorFilter = (i) => i.user.id === interaction.user.id;
 
     try {
@@ -229,108 +234,502 @@ module.exports = {
       });
 
       if (confirmation.customId === "background") {
-        const holiday = new ButtonBuilder()
-          .setCustomId("holiday")
-          .setLabel("Holiday")
+        const bluechristmas = new ButtonBuilder()
+          .setCustomId("bluechristmasbg")
+          .setLabel("Blue Christmas")
           .setStyle(ButtonStyle.Primary);
-        const nobg = new ButtonBuilder()
-          .setCustomId("nobg")
-          .setLabel("No Background")
+        const greenchristmas = new ButtonBuilder()
+          .setCustomId("greenchristmasbg")
+          .setLabel("Green Christmas")
           .setStyle(ButtonStyle.Primary);
-        newRow = new ActionRowBuilder().addComponents(holiday, nobg);
+        const redchristmas = new ButtonBuilder()
+          .setCustomId("redchristmasbg")
+          .setLabel("Red Christmas")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(
+          bluechristmas,
+          greenchristmas,
+          redchristmas
+        );
         await confirmation.update({
           components: [newRow],
         });
       } else if (confirmation.customId === "outfit") {
-        const kit = new ButtonBuilder()
-          .setCustomId("kit")
-          .setLabel("Outfit")
+        const argentina = new ButtonBuilder()
+          .setCustomId("argentinaoutf")
+          .setLabel("Argentina")
           .setStyle(ButtonStyle.Primary);
-        const nobg = new ButtonBuilder()
-          .setCustomId("nobg")
-          .setLabel("No Background")
+        const australia = new ButtonBuilder()
+          .setCustomId("australiaoutf")
+          .setLabel("Australia")
           .setStyle(ButtonStyle.Primary);
-        newRow = new ActionRowBuilder().addComponents(kit, nobg);
+        const belgium = new ButtonBuilder()
+          .setCustomId("belgiaoutf")
+          .setLabel("Belgium")
+          .setStyle(ButtonStyle.Primary);
+        const blacksuit = new ButtonBuilder()
+          .setCustomId("blacksuitoutf")
+          .setLabel("Black Suit")
+          .setStyle(ButtonStyle.Primary);
+        const bluesuit = new ButtonBuilder()
+          .setCustomId("bluesuitoutf")
+          .setLabel("Blue Suit")
+          .setStyle(ButtonStyle.Primary);
+        const brazil = new ButtonBuilder()
+          .setCustomId("braziloutf")
+          .setLabel("Brazil")
+          .setStyle(ButtonStyle.Primary);
+        const canada = new ButtonBuilder()
+          .setCustomId("canadaoutf")
+          .setLabel("Canada")
+          .setStyle(ButtonStyle.Primary);
+        const costarica = new ButtonBuilder()
+          .setCustomId("costaricaoutf")
+          .setLabel("Costa Rica")
+          .setStyle(ButtonStyle.Primary);
+        const croatia = new ButtonBuilder()
+          .setCustomId("croatiaoutf")
+          .setLabel("Croatia")
+          .setStyle(ButtonStyle.Primary);
+        const daovotepin = new ButtonBuilder()
+          .setCustomId("daovotepinoutf")
+          .setLabel("Dao Vote Pin")
+          .setStyle(ButtonStyle.Primary);
+        const england = new ButtonBuilder()
+          .setCustomId("englandoutf")
+          .setLabel("England")
+          .setStyle(ButtonStyle.Primary);
+        const france = new ButtonBuilder()
+          .setCustomId("franceoutf")
+          .setLabel("France")
+          .setStyle(ButtonStyle.Primary);
+        const germany = new ButtonBuilder()
+          .setCustomId("germanyoutf")
+          .setLabel("Germany")
+          .setStyle(ButtonStyle.Primary);
+        const italy = new ButtonBuilder()
+          .setCustomId("italyoutf")
+          .setLabel("Italy")
+          .setStyle(ButtonStyle.Primary);
+        const mexico = new ButtonBuilder()
+          .setCustomId("mexicooutf")
+          .setLabel("Mexico")
+          .setStyle(ButtonStyle.Primary);
+        const monkestronger = new ButtonBuilder()
+          .setCustomId("monkestrongeroutf")
+          .setLabel("Monkes Stronger Together")
+          .setStyle(ButtonStyle.Primary);
+        const netherlands = new ButtonBuilder()
+          .setCustomId("netherlandsoutf")
+          .setLabel("Netherlands")
+          .setStyle(ButtonStyle.Primary);
+        const pinksuit = new ButtonBuilder()
+          .setCustomId("pinksuitoutf")
+          .setLabel("Pink Suit")
+          .setStyle(ButtonStyle.Primary);
+        const portugalsolana = new ButtonBuilder()
+          .setCustomId("portugalsolanaoutf")
+          .setLabel("Portugal Solana")
+          .setStyle(ButtonStyle.Primary);
+        const santahat = new ButtonBuilder()
+          .setCustomId("santahatoutf")
+          .setLabel("Santa Hat")
+          .setStyle(ButtonStyle.Primary);
+        const serbia = new ButtonBuilder()
+          .setCustomId("serbiaoutf")
+          .setLabel("Serbia")
+          .setStyle(ButtonStyle.Primary);
+        const southkorea = new ButtonBuilder()
+          .setCustomId("southkoreaoutf")
+          .setLabel("South Korea")
+          .setStyle(ButtonStyle.Primary);
+        const spain = new ButtonBuilder()
+          .setCustomId("spainoutf")
+          .setLabel("Spain")
+          .setStyle(ButtonStyle.Primary);
+        const usa = new ButtonBuilder()
+          .setCustomId("usaoutf")
+          .setLabel("USA")
+          .setStyle(ButtonStyle.Primary);
+        const votepin = new ButtonBuilder()
+          .setCustomId("votepinoutf")
+          .setLabel("Vote Pin")
+          .setStyle(ButtonStyle.Primary);
+        const votepinbrero = new ButtonBuilder()
+          .setCustomId("votepinbrerooutf")
+          .setLabel("Vote Pinbrero")
+          .setStyle(ButtonStyle.Primary);
+        const cape = new ButtonBuilder()
+          .setCustomId("capeoutf")
+          .setLabel("Cape")
+          .setStyle(ButtonStyle.Primary);
+        const elf = new ButtonBuilder()
+          .setCustomId("elfoutf")
+          .setLabel("Elf")
+          .setStyle(ButtonStyle.Primary);
+        const ghost = new ButtonBuilder()
+          .setCustomId("ghostoutf")
+          .setLabel("Ghost")
+          .setStyle(ButtonStyle.Primary);
+        const halo = new ButtonBuilder()
+          .setCustomId("halooutf")
+          .setLabel("Halo")
+          .setStyle(ButtonStyle.Primary);
+        const horns = new ButtonBuilder()
+          .setCustomId("hornsoutf")
+          .setLabel("Horns")
+          .setStyle(ButtonStyle.Primary);
+        const masters = new ButtonBuilder()
+          .setCustomId("mastersoutf")
+          .setLabel("Masters")
+          .setStyle(ButtonStyle.Primary);
+        const portugal = new ButtonBuilder()
+          .setCustomId("portugaloutf")
+          .setLabel("Portugal")
+          .setStyle(ButtonStyle.Primary);
+        const pumpkin = new ButtonBuilder()
+          .setCustomId("pumpkinoutf")
+          .setLabel("Pumpkin")
+          .setStyle(ButtonStyle.Primary);
+        const santa = new ButtonBuilder()
+          .setCustomId("santaoutf")
+          .setLabel("Santa")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(
+          argentina,
+          australia,
+          belgium,
+          blacksuit,
+          bluesuit
+        );
+        newRow2 = new ActionRowBuilder().addComponents(
+          brazil,
+          canada,
+          costarica,
+          croatia,
+          daovotepin
+        );
+        newRow3 = new ActionRowBuilder().addComponents(
+          england,
+          france,
+          germany,
+          italy,
+          mexico
+        );
+        newRow4 = new ActionRowBuilder().addComponents(
+          monkestronger,
+          netherlands,
+          pinksuit,
+          portugalsolana,
+          santahat
+        );
+        newRow5 = new ActionRowBuilder().addComponents(
+          serbia,
+          southkorea,
+          spain,
+          usa,
+          votepin
+        );
+        newRow6 = new ActionRowBuilder().addComponents(
+          votepinbrero,
+          cape,
+          elf,
+          ghost,
+          halo
+        );
+        newRow7 = new ActionRowBuilder().addComponents(
+          horns,
+          masters,
+          portugal,
+          pumpkin,
+          santa
+        );
         await confirmation.update({
-          components: [newRow],
+          components: [
+            newRow,
+            newRow2,
+            newRow3,
+            newRow4,
+            newRow5,
+            // newRow6,
+            // newRow7,
+          ],
         });
       } else if (confirmation.customId === "sombrero") {
-        const outfit = new ButtonBuilder()
-          .setCustomId("outfit")
-          .setLabel("Outfit")
+        const black = new ButtonBuilder()
+          .setCustomId("blacksombrero")
+          .setLabel("Black Sombrero")
           .setStyle(ButtonStyle.Primary);
-        const nobg = new ButtonBuilder()
-          .setCustomId("nobg")
-          .setLabel("No Background")
+        const easter = new ButtonBuilder()
+          .setCustomId("eastersombrero")
+          .setLabel("Easter Sombrero")
           .setStyle(ButtonStyle.Primary);
-        newRow = new ActionRowBuilder().addComponents(outfit, nobg);
+        const mexico = new ButtonBuilder()
+          .setCustomId("mexicosombrero")
+          .setLabel("Easter Sombrero")
+          .setStyle(ButtonStyle.Primary);
+        const pink = new ButtonBuilder()
+          .setCustomId("pinksombrero")
+          .setLabel("Pink Sombrero")
+          .setStyle(ButtonStyle.Primary);
+        const santa = new ButtonBuilder()
+          .setCustomId("santasombrero")
+          .setLabel("Santa Sombrero")
+          .setStyle(ButtonStyle.Primary);
+        const solana = new ButtonBuilder()
+          .setCustomId("solanasombrero")
+          .setLabel("Solana Sombrero")
+          .setStyle(ButtonStyle.Primary);
+        const plain = new ButtonBuilder()
+          .setCustomId("plainsombrero")
+          .setLabel("Sombrero")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(
+          black,
+          easter,
+          mexico,
+          pink,
+          santa
+        );
+        newRow2 = new ActionRowBuilder().addComponents(solana, plain);
         await confirmation.update({
-          components: [newRow],
+          components: [newRow, newRow2],
         });
       } else if (confirmation.customId === "gif") {
-        const outfit = new ButtonBuilder()
-          .setCustomId("outfit")
-          .setLabel("Outfit")
+        const gm = new ButtonBuilder()
+          .setCustomId("gmgif")
+          .setLabel("GM")
           .setStyle(ButtonStyle.Primary);
-        const nobg = new ButtonBuilder()
-          .setCustomId("nobg")
-          .setLabel("No Background")
+        const gm2 = new ButtonBuilder()
+          .setCustomId("gm2gif")
+          .setLabel("GM 2")
+          .setStyle(ButtonStyle.Primary);
+        const gn = new ButtonBuilder()
+          .setCustomId("gngif")
+          .setLabel("GN")
+          .setStyle(ButtonStyle.Primary);
+        const gn2 = new ButtonBuilder()
+          .setCustomId("gn2gif")
+          .setLabel("GN 2")
+          .setStyle(ButtonStyle.Primary);
+        const welcome = new ButtonBuilder()
+          .setCustomId("welcomegif")
+          .setLabel("Welcome")
           .setStyle(ButtonStyle.Primary);
         newRow = new ActionRowBuilder().addComponents(outfit, nobg);
         await confirmation.update({
           components: [newRow],
         });
       } else if (confirmation.customId === "wallpaper") {
-        const outfit = new ButtonBuilder()
-          .setCustomId("outfit")
-          .setLabel("Outfit")
+        const blackfade = new ButtonBuilder()
+          .setCustomId("blackfadewp")
+          .setLabel("Black Fade")
           .setStyle(ButtonStyle.Primary);
-        const nobg = new ButtonBuilder()
-          .setCustomId("nobg")
-          .setLabel("No Background")
+        const blackstack = new ButtonBuilder()
+          .setCustomId("blackstackwp")
+          .setLabel("Black Stack")
           .setStyle(ButtonStyle.Primary);
-        newRow = new ActionRowBuilder().addComponents(outfit, nobg);
+        const black = new ButtonBuilder()
+          .setCustomId("blackwp")
+          .setLabel("Black")
+          .setStyle(ButtonStyle.Primary);
+        const bluestack = new ButtonBuilder()
+          .setCustomId("blackwp")
+          .setLabel("Black")
+          .setStyle(ButtonStyle.Primary);
+        const greenicons = new ButtonBuilder()
+          .setCustomId("greeniconswp")
+          .setLabel("Black")
+          .setStyle(ButtonStyle.Primary);
+        const greenmd = new ButtonBuilder()
+          .setCustomId("greenmdwp")
+          .setLabel("Green MD")
+          .setStyle(ButtonStyle.Primary);
+        const greenstack = new ButtonBuilder()
+          .setCustomId("greenstackwp")
+          .setLabel("Green Stack")
+          .setStyle(ButtonStyle.Primary);
+        const whitebluemd = new ButtonBuilder()
+          .setCustomId("whitebluemdwp")
+          .setLabel("White Blue MD")
+          .setStyle(ButtonStyle.Primary);
+        const whiteicons = new ButtonBuilder()
+          .setCustomId("whiteiconswp")
+          .setLabel("White Icons")
+          .setStyle(ButtonStyle.Primary);
+        const blue = new ButtonBuilder()
+          .setCustomId("bluewp")
+          .setLabel("Blue")
+          .setStyle(ButtonStyle.Primary);
+        const green = new ButtonBuilder()
+          .setCustomId("greenwp")
+          .setLabel("Green")
+          .setStyle(ButtonStyle.Primary);
+        const yellow = new ButtonBuilder()
+          .setCustomId("yellowwp")
+          .setLabel("Yellow")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(
+          blackfade,
+          blackstack,
+          black,
+          bluestack,
+          greenicons
+        );
+        newRow2 = new ActionRowBuilder().addComponents(
+          greenmd,
+          greenstack,
+          whitebluemd,
+          whiteicons,
+          blue
+        );
+        newRow3 = new ActionRowBuilder().addComponents(green, yellow);
         await confirmation.update({
-          components: [newRow],
+          components: [newRow, newRow2, newRow3],
         });
       } else if (confirmation.customId === "banner") {
-        const outfit = new ButtonBuilder()
-          .setCustomId("outfit")
-          .setLabel("Outfit")
+        const bluebananas = new ButtonBuilder()
+          .setCustomId("bluebananasb")
+          .setLabel("Blue Bananas")
           .setStyle(ButtonStyle.Primary);
-        const nobg = new ButtonBuilder()
-          .setCustomId("nobg")
-          .setLabel("No Background")
+        const bluegreenwave = new ButtonBuilder()
+          .setCustomId("bluegreenwaveb")
+          .setLabel("Blue Green Wave")
           .setStyle(ButtonStyle.Primary);
-        newRow = new ActionRowBuilder().addComponents(outfit, nobg);
+        const greenbananas = new ButtonBuilder()
+          .setCustomId("greenbananasb")
+          .setLabel("Green Bananas")
+          .setStyle(ButtonStyle.Primary);
+        const greenwave = new ButtonBuilder()
+          .setCustomId("greenwaveb")
+          .setLabel("Green Wave")
+          .setStyle(ButtonStyle.Primary);
+        const greenwhite = new ButtonBuilder()
+          .setCustomId("greenwhiteb")
+          .setLabel("Green White")
+          .setStyle(ButtonStyle.Primary);
+        const whitebananas = new ButtonBuilder()
+          .setCustomId("whitebananasb")
+          .setLabel("White Bananas")
+          .setStyle(ButtonStyle.Primary);
+        const whitegreen = new ButtonBuilder()
+          .setCustomId("whitegreenb")
+          .setLabel("White Green")
+          .setStyle(ButtonStyle.Primary);
+        const wordmarkblue = new ButtonBuilder()
+          .setCustomId("wordmarkblueb")
+          .setLabel("Wordmark Blue")
+          .setStyle(ButtonStyle.Primary);
+        const wordmarkgreen = new ButtonBuilder()
+          .setCustomId("wordmarkgreenb")
+          .setLabel("Wordmark Green")
+          .setStyle(ButtonStyle.Primary);
+        const yellowblue = new ButtonBuilder()
+          .setCustomId("yellowblueb")
+          .setLabel("Yellow Blue")
+          .setStyle(ButtonStyle.Primary);
+        const black = new ButtonBuilder()
+          .setCustomId("blackb")
+          .setLabel("Black")
+          .setStyle(ButtonStyle.Primary);
+        const blue = new ButtonBuilder()
+          .setCustomId("blueb")
+          .setLabel("Blue")
+          .setStyle(ButtonStyle.Primary);
+        const green = new ButtonBuilder()
+          .setCustomId("greenb")
+          .setLabel("Green")
+          .setStyle(ButtonStyle.Primary);
+        const white = new ButtonBuilder()
+          .setCustomId("whiteb")
+          .setLabel("White")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(
+          bluebananas,
+          bluegreenwave,
+          greenbananas,
+          greenwave,
+          greenwhite
+        );
+        newRow2 = new ActionRowBuilder().addComponents(
+          whitebananas,
+          whitegreen,
+          wordmarkblue,
+          wordmarkgreen,
+          yellowblue
+        );
+        newRow3 = new ActionRowBuilder().addComponents(
+          white,
+          black,
+          blue,
+          green
+        );
         await confirmation.update({
-          components: [newRow],
+          components: [newRow, newRow2, newRow3],
         });
       } else if (confirmation.customId === "watchface") {
-        const outfit = new ButtonBuilder()
-          .setCustomId("outfit")
-          .setLabel("Outfit")
+        const blackstack = new ButtonBuilder()
+          .setCustomId("blackstackwf")
+          .setLabel("Black Stack")
           .setStyle(ButtonStyle.Primary);
-        const nobg = new ButtonBuilder()
-          .setCustomId("nobg")
-          .setLabel("No Background")
+        const bluebananas = new ButtonBuilder()
+          .setCustomId("bluebananaswf")
+          .setLabel("Blue Bananas")
           .setStyle(ButtonStyle.Primary);
-        newRow = new ActionRowBuilder().addComponents(outfit, nobg);
+        const bluestack = new ButtonBuilder()
+          .setCustomId("bluestackwf")
+          .setLabel("Blue Stack")
+          .setStyle(ButtonStyle.Primary);
+        const greenbananas = new ButtonBuilder()
+          .setCustomId("greenbananaswf")
+          .setLabel("Green Bananas")
+          .setStyle(ButtonStyle.Primary);
+        const greenmd = new ButtonBuilder()
+          .setCustomId("greenmdwf")
+          .setLabel("Green MD")
+          .setStyle(ButtonStyle.Primary);
+        const greenmonke = new ButtonBuilder()
+          .setCustomId("greenmonkewf")
+          .setLabel("Green Monke")
+          .setStyle(ButtonStyle.Primary);
+        const greenstack = new ButtonBuilder()
+          .setCustomId("greenstackwf")
+          .setLabel("Blue Bananas")
+          .setStyle(ButtonStyle.Primary);
+        const whitebananas = new ButtonBuilder()
+          .setCustomId("whitebananaswf")
+          .setLabel("Blue Bananas")
+          .setStyle(ButtonStyle.Primary);
+        const whitebluemd = new ButtonBuilder()
+          .setCustomId("whitebluemdwf")
+          .setLabel("Blue Bananas")
+          .setStyle(ButtonStyle.Primary);
+        const blue = new ButtonBuilder()
+          .setCustomId("bluewf")
+          .setLabel("Blue Bananas")
+          .setStyle(ButtonStyle.Primary);
+        newRow = new ActionRowBuilder().addComponents(
+          blackstack,
+          bluebananas,
+          bluestack,
+          greenbananas,
+          greenmd
+        );
+        newRow2 = new ActionRowBuilder().addComponents(
+          greenmonke,
+          greenstack,
+          whitebananas,
+          whitebluemd,
+          blue
+        );
+
         await confirmation.update({
-          components: [newRow],
+          components: [newRow, newRow2],
         });
       } else if (confirmation.customId === "save") {
-        const outfit = new ButtonBuilder()
-          .setCustomId("outfit")
-          .setLabel("Outfit")
-          .setStyle(ButtonStyle.Primary);
-        const nobg = new ButtonBuilder()
-          .setCustomId("nobg")
-          .setLabel("No Background")
-          .setStyle(ButtonStyle.Primary);
-        newRow = new ActionRowBuilder().addComponents(outfit, nobg);
-        await confirmation.update({
-          components: [newRow],
+        interaction.followUp({
+          content: "Here's your Monke!",
+          files: [imageUri],
         });
       }
     } catch (e) {

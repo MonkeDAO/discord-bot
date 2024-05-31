@@ -2,5 +2,6 @@
   "token": "your discord token here",
   "clientId": "your discord client id here",
   "guildId": "your discord guild id here",
-  "heliusTk": "your helius api key here"
+  "heliusTk": "your helius api key here",
+  "gen3ca": "8Rt3Ayqth4DAiPnW9MDFi63TiQJHmohfTWLMQFHi4KZH"
 }

@@ -10,13 +10,7 @@ const {
 const fs = require("fs");
 const path = require("path");
 const wait = require("node:timers/promises").setTimeout;
-const {
-  findImageUrisByName,
-  findGen3ImageUrisByName,
-  findTraitByName,
-  findGen3TraitByName,
-} = require("../../utils/fetchfuncs.js");
-
+const axios = require("axios");
 const monkeDataPath = path.join(__dirname, "..", "..", "data", "monkeList.json");
 
 const {
@@ -118,7 +112,6 @@ const {
 
 const gen3DataPath = path.join(__dirname, "..", "..", "data", "gen3List.json");
 
-let jsonData, gen3JsonData;
 try {
   jsonData = JSON.parse(fs.readFileSync(monkeDataPath, "utf-8"));
   console.log(" Gen 2 JSON data loaded successfully");
@@ -127,6 +120,16 @@ try {
 } catch (error) {
   console.error("Error reading monke data:", error);
   process.exit(1);
+}
+
+async function fetchData(url) {
+  try {
+    const response = await axios.get(url);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
 }
 
 module.exports = {
@@ -161,14 +164,20 @@ module.exports = {
 
     if (generation === 2) {
       const inputName = `SMB #${number}`;
-      imageUri = findImageUrisByName(jsonData, inputName).toString();
-      type = findTraitByName(jsonData, inputName, "Type");
-      clothes = findTraitByName(jsonData, inputName, "Clothes");
-      ears = findTraitByName(jsonData, inputName, "Ears");
-      mouth = findTraitByName(jsonData, inputName, "Mouth");
-      eyes = findTraitByName(jsonData, inputName, "Eyes");
-      hat = findTraitByName(jsonData, inputName, "Hat");
-      console.log(imageUri);
+
+      imageUri = await fetchData(`https://assets-api.monkedao.io/api/data/2/${number}/imageUri`);
+      type = await fetchData(`https://assets-api.monkedao.io/api/data/2/${number}/type`);
+      clothes = await fetchData(`https://assets-api.monkedao.io/api/data/2/${number}/clothes`);
+
+      ears = await fetchData(`https://assets-api.monkedao.io/api/data/2/${number}/ears`);
+
+      mouth = await fetchData(`https://assets-api.monkedao.io/api/data/2/${number}/mouth`);
+
+      eyes = await fetchData(`https://assets-api.monkedao.io/api/data/2/${number}/eyes`);
+
+      hat = await fetchData(`https://assets-api.monkedao.io/api/data/2/${number}/hat`);
+
+      console.log(imageUri.imageUri);
 
       embed = new EmbedBuilder()
         .setTitle(`Dress Up Your Monke!`)
@@ -177,32 +186,36 @@ module.exports = {
           `Hello Gen${generation} Monke #${number}! Choose how you want to dress up your Monke`
         )
         .setThumbnail("https://utfs.io/f/fe2b27a4-d815-4801-bd46-748166eecb3b-18ddfq.png")
-        .setImage(imageUri)
+        .setImage(imageUri.imageUri)
         .addFields(
-          { name: "Type", value: type, inline: true },
-          { name: "Clothes", value: clothes, inline: true },
-          { name: "Ears", value: ears, inline: true },
-          { name: "Mouth", value: mouth, inline: true },
-          { name: "Eyes", value: eyes, inline: true },
-          { name: "Hat", value: hat, inline: true }
+          { name: "Type", value: type.type, inline: true },
+          { name: "Clothes", value: clothes.clothes, inline: true },
+          { name: "Ears", value: ears.ears, inline: true },
+          { name: "Mouth", value: mouth.mouth, inline: true },
+          { name: "Eyes", value: eyes.eyes, inline: true },
+          { name: "Hat", value: hat.hat, inline: true }
         )
         .setTimestamp();
     }
 
-    let species, eyewear, backgroundd;
+    let species, eyewear, backgroundd, back;
 
     if (generation === 3) {
       const inputName = `SMB Gen3 #${number}`;
-      imageUri = findGen3ImageUrisByName(gen3JsonData, inputName).toString();
-      species = findGen3TraitByName(gen3JsonData, inputName, "Species");
-      hat = findGen3TraitByName(gen3JsonData, inputName, "Hat");
-      eyewear = findGen3TraitByName(gen3JsonData, inputName, "Eyewear");
-      clothes = findGen3TraitByName(gen3JsonData, inputName, "Clothes");
-      mouth = findGen3TraitByName(gen3JsonData, inputName, "Mouth");
-      backgroundd = findGen3TraitByName(gen3JsonData, inputName, "Background");
-      eyes = findGen3TraitByName(gen3JsonData, inputName, "Eyes");
-      back = findGen3TraitByName(gen3JsonData, inputName, "Back");
-      console.log(imageUri);
+
+      imageUri = await fetchData(`https://assets-api.monkedao.io/api/data/3/${number}/imageUri`);
+      species = await fetchData(`https://assets-api.monkedao.io/api/data/3/${number}/species`);
+      hat = await fetchData(`https://assets-api.monkedao.io/api/data/3/${number}/hat`);
+      eyewear = await fetchData(`https://assets-api.monkedao.io/api/data/3/${number}/eyewear`);
+      clothes = await fetchData(`https://assets-api.monkedao.io/api/data/3/${number}/clothes`);
+      mouth = await fetchData(`https://assets-api.monkedao.io/api/data/3/${number}/mouth`);
+      backgroundd = await fetchData(
+        `https://assets-api.monkedao.io/api/data/3/${number}/backgroundd`
+      );
+      eyes = await fetchData(`https://assets-api.monkedao.io/api/data/3/${number}/eyes`);
+      back = await fetchData(`https://assets-api.monkedao.io/api/data/3/${number}/back`);
+
+      console.log(imageUri.imageUri);
 
       embed = new EmbedBuilder()
         .setTitle(`Dress Up Your Monke!`)
@@ -213,14 +226,14 @@ module.exports = {
         .setThumbnail("https://utfs.io/f/fe2b27a4-d815-4801-bd46-748166eecb3b-18ddfq.png")
         .setImage(imageUri)
         .addFields(
-          { name: "Species", value: species, inline: true },
-          { name: "Hat", value: hat, inline: true },
-          { name: "Eyewear", value: eyewear, inline: true },
-          { name: "Clothes", value: clothes, inline: true },
-          { name: "Mouth", value: mouth, inline: true },
-          { name: "Eyes", value: eyes, inline: true },
-          { name: "Background", value: backgroundd, inline: true },
-          { name: "Back", value: back, inline: true }
+          { name: "Species", value: species.species, inline: true },
+          { name: "Hat", value: hat.hat, inline: true },
+          { name: "Eyewear", value: eyewear.eyewear, inline: true },
+          { name: "Clothes", value: clothes.clothes, inline: true },
+          { name: "Mouth", value: mouth.mouth, inline: true },
+          { name: "Eyes", value: eyes.eyes, inline: true },
+          { name: "Background", value: backgroundd.backgroundd, inline: true },
+          { name: "Back", value: back.back, inline: true }
         )
         .setFooter({
           text: "If the interaction fails, press the desired button again",
@@ -242,22 +255,24 @@ module.exports = {
       ephemeral: true,
     });
 
-    await wait(2_000);
+    await wait(500);
     let newRow, newRow2, newRow3, newRow4, newRow5, newRow6, newRow7;
     const collectorFilter = (i) => i.user.id === interaction.user.id;
 
+    let confirmation;
+
     try {
-      const confirmation = await response.awaitMessageComponent({
+      confirmation = await response.awaitMessageComponent({
         filter: collectorFilter,
         // time: 60_000,
       });
 
-      if (confirmation.customId === "background") {
+      if (confirmation.customId === "pfp_backgrounds") {
         newRow = new ActionRowBuilder().addComponents(bluechristmas, greenchristmas, redchristmas);
         await confirmation.update({
           components: [newRow],
         });
-      } else if (confirmation.customId === "outfit") {
+      } else if (confirmation.customId === "outfits") {
         newRow = new ActionRowBuilder().addComponents(
           argentina,
           australia,
@@ -294,7 +309,7 @@ module.exports = {
             // newRow7,
           ],
         });
-      } else if (confirmation.customId === "sombrero") {
+      } else if (confirmation.customId === "sombreros") {
         newRow = new ActionRowBuilder().addComponents(
           black,
           easter,
@@ -306,12 +321,12 @@ module.exports = {
         await confirmation.update({
           components: [newRow, newRow2],
         });
-      } else if (confirmation.customId === "gif") {
+      } else if (confirmation.customId === "gifs") {
         newRow = new ActionRowBuilder().addComponents(gm, gm2, gn, gn2, welcome);
         await confirmation.update({
           components: [newRow],
         });
-      } else if (confirmation.customId === "wallpaper") {
+      } else if (confirmation.customId === "wallpapers") {
         newRow = new ActionRowBuilder().addComponents(
           blackfade,
           blackstack,
@@ -330,7 +345,7 @@ module.exports = {
         await confirmation.update({
           components: [newRow, newRow2, newRow3],
         });
-      } else if (confirmation.customId === "banner") {
+      } else if (confirmation.customId === "banners") {
         newRow = new ActionRowBuilder().addComponents(
           bluebananas,
           bluegreenwave,
@@ -349,7 +364,7 @@ module.exports = {
         await confirmation.update({
           components: [newRow, newRow2, newRow3],
         });
-      } else if (confirmation.customId === "watchface") {
+      } else if (confirmation.customId === "watchfaces") {
         newRow = new ActionRowBuilder().addComponents(
           blackstackwf,
           bluebananaswf,
@@ -378,6 +393,51 @@ module.exports = {
       console.log(e);
       await interaction.editReply({
         content: "Confirmation not received within 1 minute, cancelling",
+        components: [],
+      });
+    }
+
+    await wait(500);
+    const collectorFilter2 = (i) => i.user.id === interaction.user.id;
+
+    let monkeResult;
+
+    try {
+      const confirmation2 = await response.awaitMessageComponent({
+        filter: collectorFilter2,
+        // time: 60_000,
+      });
+
+      const types = confirmation.customId;
+
+      console.log(types);
+
+      const keys = confirmation2.customId;
+
+      console.log(keys);
+
+      let filetype;
+
+      if (types === "gifs") {
+        filetype = ".gif";
+      } else {
+        filetype = ".png";
+      }
+
+      const dressupUrl = `https://assets-api.monkedao.io/api/dressup/2/${number}/${types}/${keys}${filetype}`;
+
+      console.log(dressupUrl);
+
+      const monkeAsset = new AttachmentBuilder(dressupUrl);
+
+      interaction.followUp({
+        content: `Here's the requested MonkeAsset for Gen2 #${number}!`,
+        files: [monkeAsset],
+      });
+    } catch (e) {
+      console.log(e);
+      await interaction.editReply({
+        content: "Error retrieving MonkeAsset, cancelling",
         components: [],
       });
     }

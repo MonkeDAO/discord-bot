@@ -1,31 +1,28 @@
 let { ButtonBuilder, ButtonStyle } = require("discord.js");
 
 let background = new ButtonBuilder()
-  .setCustomId("background")
+  .setCustomId("pfp_backgrounds")
   .setLabel("Background")
   .setStyle(ButtonStyle.Success);
 let outfit = new ButtonBuilder()
-  .setCustomId("outfit")
+  .setCustomId("outfits")
   .setLabel("Outfit")
   .setStyle(ButtonStyle.Success);
 let sombrero = new ButtonBuilder()
-  .setCustomId("sombrero")
+  .setCustomId("sombreros")
   .setLabel("Sombrero")
   .setStyle(ButtonStyle.Success);
-let gif = new ButtonBuilder()
-  .setCustomId("gif")
-  .setLabel("GIFs")
-  .setStyle(ButtonStyle.Success);
+let gif = new ButtonBuilder().setCustomId("gifs").setLabel("GIFs").setStyle(ButtonStyle.Success);
 let wallpaper = new ButtonBuilder()
-  .setCustomId("wallpaper")
+  .setCustomId("wallpapers")
   .setLabel("Wallpaper")
   .setStyle(ButtonStyle.Success);
 let banner = new ButtonBuilder()
-  .setCustomId("banner")
+  .setCustomId("banners")
   .setLabel("Banner")
   .setStyle(ButtonStyle.Success);
 let watchface = new ButtonBuilder()
-  .setCustomId("watchface")
+  .setCustomId("watchfaces")
   .setLabel("Watchface")
   .setStyle(ButtonStyle.Success);
 let save = new ButtonBuilder()
@@ -124,10 +121,7 @@ let spain = new ButtonBuilder()
   .setCustomId("spainoutf")
   .setLabel("Spain")
   .setStyle(ButtonStyle.Primary);
-let usa = new ButtonBuilder()
-  .setCustomId("usaoutf")
-  .setLabel("USA")
-  .setStyle(ButtonStyle.Primary);
+let usa = new ButtonBuilder().setCustomId("usaoutf").setLabel("USA").setStyle(ButtonStyle.Primary);
 let votepin = new ButtonBuilder()
   .setCustomId("votepinoutf")
   .setLabel("Vote Pin")
@@ -140,10 +134,7 @@ let cape = new ButtonBuilder()
   .setCustomId("capeoutf")
   .setLabel("Cape")
   .setStyle(ButtonStyle.Primary);
-let elf = new ButtonBuilder()
-  .setCustomId("elfoutf")
-  .setLabel("Elf")
-  .setStyle(ButtonStyle.Primary);
+let elf = new ButtonBuilder().setCustomId("elfoutf").setLabel("Elf").setStyle(ButtonStyle.Primary);
 let ghost = new ButtonBuilder()
   .setCustomId("ghostoutf")
   .setLabel("Ghost")
@@ -200,24 +191,12 @@ let plain = new ButtonBuilder()
   .setCustomId("plainsombrero")
   .setLabel("Sombrero")
   .setStyle(ButtonStyle.Primary);
-let gm = new ButtonBuilder()
-  .setCustomId("gmgif")
-  .setLabel("GM")
-  .setStyle(ButtonStyle.Primary);
-let gm2 = new ButtonBuilder()
-  .setCustomId("gm2gif")
-  .setLabel("GM 2")
-  .setStyle(ButtonStyle.Primary);
-let gn = new ButtonBuilder()
-  .setCustomId("gngif")
-  .setLabel("GN")
-  .setStyle(ButtonStyle.Primary);
-let gn2 = new ButtonBuilder()
-  .setCustomId("gn2gif")
-  .setLabel("GN 2")
-  .setStyle(ButtonStyle.Primary);
+let gm = new ButtonBuilder().setCustomId("gm").setLabel("GM").setStyle(ButtonStyle.Primary);
+let gm2 = new ButtonBuilder().setCustomId("gm2").setLabel("GM 2").setStyle(ButtonStyle.Primary);
+let gn = new ButtonBuilder().setCustomId("gn").setLabel("GN").setStyle(ButtonStyle.Primary);
+let gn2 = new ButtonBuilder().setCustomId("gn2").setLabel("GN 2").setStyle(ButtonStyle.Primary);
 let welcome = new ButtonBuilder()
-  .setCustomId("welcomegif")
+  .setCustomId("welcome")
   .setLabel("Welcome")
   .setStyle(ButtonStyle.Primary);
 let blackfade = new ButtonBuilder()
@@ -233,7 +212,7 @@ let blackwp = new ButtonBuilder()
   .setLabel("Black")
   .setStyle(ButtonStyle.Primary);
 let bluestack = new ButtonBuilder()
-  .setCustomId("blackwp")
+  .setCustomId("bluestackwp")
   .setLabel("Black")
   .setStyle(ButtonStyle.Primary);
 let greenicons = new ButtonBuilder()
@@ -312,10 +291,7 @@ let blackb = new ButtonBuilder()
   .setCustomId("blackb")
   .setLabel("Black")
   .setStyle(ButtonStyle.Primary);
-let blue = new ButtonBuilder()
-  .setCustomId("blueb")
-  .setLabel("Blue")
-  .setStyle(ButtonStyle.Primary);
+let blue = new ButtonBuilder().setCustomId("blueb").setLabel("Blue").setStyle(ButtonStyle.Primary);
 let green = new ButtonBuilder()
   .setCustomId("greenb")
   .setLabel("Green")
@@ -350,19 +326,19 @@ let greenmonke = new ButtonBuilder()
   .setStyle(ButtonStyle.Primary);
 let greenstackwf = new ButtonBuilder()
   .setCustomId("greenstackwf")
-  .setLabel("Blue Bananas")
+  .setLabel("Green Stack")
   .setStyle(ButtonStyle.Primary);
 let whitebananaswf = new ButtonBuilder()
   .setCustomId("whitebananaswf")
-  .setLabel("Blue Bananas")
+  .setLabel("White Bananas")
   .setStyle(ButtonStyle.Primary);
 let whitebluemdwf = new ButtonBuilder()
   .setCustomId("whitebluemdwf")
-  .setLabel("Blue Bananas")
+  .setLabel("White Blue MD")
   .setStyle(ButtonStyle.Primary);
 let bluewf = new ButtonBuilder()
   .setCustomId("bluewf")
-  .setLabel("Blue Bananas")
+  .setLabel("Blue")
   .setStyle(ButtonStyle.Primary);
 let bluechristmas = new ButtonBuilder()
   .setCustomId("bluechristmasbg")

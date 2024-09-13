@@ -8,13 +8,14 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.commands = new Collection();
 
 const foldersPath = path.join(__dirname, "commands");
-const commandFolders = fs.readdirSync(foldersPath);
+const commandFolders = fs.readdirSync(foldersPath).filter((folder) => {
+  const folderPath = path.join(foldersPath, folder);
+  return fs.statSync(folderPath).isDirectory(); // Ensure it's a directory
+});
 
 for (const folder of commandFolders) {
   const commandsPath = path.join(foldersPath, folder);
-  const commandFiles = fs
-    .readdirSync(commandsPath)
-    .filter((file) => file.endsWith(".js"));
+  const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith(".js"));
 
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
@@ -31,9 +32,7 @@ for (const folder of commandFolders) {
 }
 
 const eventsPath = path.join(__dirname, "events");
-const eventFiles = fs
-  .readdirSync(eventsPath)
-  .filter((file) => file.endsWith(".js"));
+const eventFiles = fs.readdirSync(eventsPath).filter((file) => file.endsWith(".js"));
 
 for (const file of eventFiles) {
   const filePath = path.join(eventsPath, file);

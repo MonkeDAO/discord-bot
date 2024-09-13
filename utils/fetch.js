@@ -1,4 +1,4 @@
-const { heliusTk } = require("../config.json");
+const heliusTk = process.env.heliusTk;
 const url = `https://mainnet.helius-rpc.com/?api-key=${heliusTk}`;
 const fs = require("fs");
 const path = require("path");
@@ -51,11 +51,7 @@ const getAssetsByGroup = async () => {
     results: assetList,
   };
 
-  fs.writeFileSync(
-    "../data/gen3List.json",
-    JSON.stringify(assetList, null, 2),
-    "utf-8"
-  );
+  fs.writeFileSync("../data/gen3List.json", JSON.stringify(assetList, null, 2), "utf-8");
 
   console.log("Uploaded Gen3 Assets");
 };
